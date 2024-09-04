@@ -10,15 +10,6 @@ client = bigquery.Client(credentials=credentials)
 dataset_id = 'coinbase_stream_data'  # Replace with your dataset ID
 table_id = 'BTC_to_currencies'  # Replace with your table name
 
-# Define the table schema
-# schema = [
-#     bigquery.SchemaField('trade_id', 'INT64', mode='REQUIRED'),
-#     bigquery.SchemaField('side', 'STRING', mode='REQUIRED'),
-#     bigquery.SchemaField('size', 'FLOAT64', mode='REQUIRED'),
-#     bigquery.SchemaField('price', 'FLOAT64', mode='REQUIRED'),
-#     bigquery.SchemaField('time', 'TIMESTAMP', mode='REQUIRED'),
-#     bigquery.SchemaField('product_id', 'STRING', mode='REQUIRED')
-# ]
 schema = [
     bigquery.SchemaField('avg_sale_price', 'FLOAT64', mode='NULLABLE'),
     bigquery.SchemaField('avg_buy_price', 'FLOAT64', mode='NULLABLE'),
@@ -35,13 +26,6 @@ table_ref = client.dataset(dataset_id).table(table_id)
 
 # Create a Table object
 table = bigquery.Table(table_ref, schema=schema)
-# Specify the partitioning field
-# table.time_partitioning = bigquery.TimePartitioning(
-#     type_=bigquery.TimePartitioningType.DAY,  # Partition by day
-#     field="start_time",  # Name of the column to use for partitioning
-#     require_partition_filter=True  # Enforce partition filter (optional)
-# )
-
 # Specify the clustering fields
 table.clustering_fields = ['product_id']
 
